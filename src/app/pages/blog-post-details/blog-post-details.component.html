@@ -1,0 +1,48 @@
+<div>
+  <a [routerLink]="['/']" class="text-start underline text-blue-800 cursor-pointer">Back</a>
+</div>
+<div class="post-detail pt-6" *ngIf="post">
+  <h1 class="text-black font-bold pb-4">{{ post.title }}</h1>
+  <p class="text-gray-900">{{ post.body }}</p>
+</div>
+
+<!-- Comments Section -->
+
+<div class="add-comment pt-6 mt-4">
+  <h2 class="text-xl font-bold pb-2">Add your Comment</h2>
+  <form (ngSubmit)="addComment()">
+    <div class="pb-2">
+      <label for="name" class="block text-sm font-medium text-gray-700">Name</label>
+      <input [(ngModel)]="newComment.name" name="name" id="name" class="mt-1 block w-96 px-3 py-2 bg-white border border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400
+      focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" 
+        required>
+    </div>
+    <div class="pb-2">
+      <label for="body" class="block text-sm font-medium text-gray-700">Comment</label>
+      <textarea [(ngModel)]="newComment.body" name="body" id="body" rows="3"
+      class="mt-1 block w-96 px-3 py-2 bg-white border border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400
+      focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500"  required></textarea>
+    </div>
+    <button type="submit"
+      class="mt-2 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700">
+      Add Comment
+    </button>
+  </form>
+  <p *ngIf="errorMessage" class="text-red-600 mt-2">{{ errorMessage }}</p>
+</div>
+
+
+<div class=" pt-6">
+  <h2 class="text-base font-bold pb-2">Comments( {{ noOfComments }} )</h2>
+  <ul>
+    <li *ngFor="let comment of comments" class="pb-2">
+      <strong>{{ comment.name }}</strong>
+      <p>{{ comment.body }}</p>
+    </li>
+  </ul>
+
+  <button
+  class="mt-6 inline-flex items-center px-4 py-2 border-transparent text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700"
+  *ngIf="noOfComments >= 1" (click)="clearComments(post.id)">Clear Comments </button>
+
+</div>
